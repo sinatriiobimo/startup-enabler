@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"ugbisa/auth"
 	"ugbisa/handler"
 	"ugbisa/user"
 
@@ -20,10 +21,11 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+	authService := auth.NewService()
 
 	userService.SaveAvatar(1, "images/1-profile.png")
 
-	userHandler := handler.NewUserHandler(userService)
+	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
