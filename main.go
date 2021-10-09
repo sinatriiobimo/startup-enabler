@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"ugbisa/auth"
 	"ugbisa/handler"
@@ -23,7 +24,16 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 
-	userService.SaveAvatar(1, "images/1-profile.png")
+	token, err := authService.ValidateToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.eJxZ8r3eJvpSYy4Y4jjw1g0fjO6jcgTDOx5XJ7v8K8c")
+	if err != nil {
+		fmt.Println("Error")
+	}
+
+	if token.Valid {
+		fmt.Println("Valid")
+	} else {
+		fmt.Println("Invalid")
+	}
 
 	userHandler := handler.NewUserHandler(userService, authService)
 
