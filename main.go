@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 	"ugbisa/auth"
+	"ugbisa/campaign"
 	"ugbisa/handler"
 	"ugbisa/helper"
 	"ugbisa/user"
@@ -25,6 +26,12 @@ func main() {
 	}
 
 	userRepository := user.NewRepository(db)
+	campaignRepository := campaign.NewRepository(db)
+
+	campaigns, err := campaignRepository.FindAll()
+
+	fmt.Println(campaigns)
+
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 
